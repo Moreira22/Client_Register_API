@@ -1,28 +1,23 @@
 package desafio_siad.desafio_siad.model;
 
+import desafio_siad.desafio_siad.domin.fisico.FisicoRequestDTO;
+import desafio_siad.desafio_siad.domin.fisico.FisicoResponseDTO;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
+
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class Fisico {
-    @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
-    private Long id;
+@DiscriminatorValue("fisico")
+public class Fisico extends Cliente {
 
     @Column
     private String cpf;
@@ -39,4 +34,11 @@ public class Fisico {
     @Column
     private Integer numero;
 
+     public Fisico(FisicoRequestDTO data){
+      this.cpf = data.cpf();
+      this.uf = data.uf();
+      this.cidade = data.cidade();
+      this.bairro = data.bairro();
+      this.numero = data.numero();
+    }
 }

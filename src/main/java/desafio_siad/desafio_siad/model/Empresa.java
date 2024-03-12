@@ -1,20 +1,16 @@
 package desafio_siad.desafio_siad.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import desafio_siad.desafio_siad.domin.empresa.EmpresaResquestDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,4 +39,9 @@ public class Empresa {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "empresa")
     private List<Cliente> cliente = new ArrayList<>();
+
+    public Empresa(EmpresaResquestDTO data){
+        this.nome = data.nome();
+        this.active = true;
+    }
 }

@@ -1,14 +1,18 @@
 package desafio_siad.desafio_siad.model;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
+import desafio_siad.desafio_siad.domin.cliente.ClienteRequestDTO;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -20,12 +24,15 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "tipo_cliente")
 public class Cliente {
+
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private Long id;
@@ -43,5 +50,11 @@ public class Cliente {
     @JoinColumn(name = "empresa_id", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Empresa empresa;
+
+    public Cliente(ClienteRequestDTO data){
+        this.nome = data.nomoe();
+        this.data_nacimento = data.data_nacimento(); 
+        this.active = true;
+    }
 
 }
