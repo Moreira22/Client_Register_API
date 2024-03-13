@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import desafio_siad.desafio_siad.model.Cliente;
 import desafio_siad.desafio_siad.model.Contato;
 import desafio_siad.desafio_siad.model.Fisico;
 import desafio_siad.desafio_siad.repository.ContatoRepository;
@@ -33,6 +34,11 @@ public class ContatoController {
         return contatoRepository.findById(id)
         .map(recordFoumd -> ResponseEntity.ok().body(recordFoumd))
         .orElse(ResponseEntity.notFound().build());
+    }
+    
+    @GetMapping()
+    public @ResponseBody List<Contato> getAllActiveTrue(){
+        return contatoRepository.findByActiveTrue();
     }
 
 }

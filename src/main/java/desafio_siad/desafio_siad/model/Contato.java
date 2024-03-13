@@ -1,5 +1,7 @@
 package desafio_siad.desafio_siad.model;
 
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import desafio_siad.desafio_siad.domin.contato.ContatoRequestDTO;
@@ -25,6 +27,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Where(clause = "active = true")
 public class Contato {
 
     @Id
