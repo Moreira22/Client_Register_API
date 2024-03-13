@@ -2,6 +2,7 @@ package desafio_siad.desafio_siad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import desafio_siad.desafio_siad.domin.contato.ContatoRequestDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -43,5 +44,11 @@ public class Contato {
     @JoinColumn(name = "juritico_id", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Juridico juridico;
+
+    public Contato(ContatoRequestDTO data){
+        this.descicao = data.descicao();
+        this.numero = data.numero();
+        this.active = true;
+    }
 
 }
