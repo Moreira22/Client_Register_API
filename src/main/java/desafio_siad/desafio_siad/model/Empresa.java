@@ -37,8 +37,8 @@ public class Empresa {
     @Column
     private Boolean active;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "empresa")
-    private List<Cliente> cliente = new ArrayList<>();
+    // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "empresa")
+    // private List<Cliente> cliente = new ArrayList<>();
 
     public Empresa(EmpresaResquestDTO data){
         this.nome = data.nome();
