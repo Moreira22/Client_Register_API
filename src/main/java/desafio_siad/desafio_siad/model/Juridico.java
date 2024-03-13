@@ -27,8 +27,8 @@ public class Juridico  extends Cliente{
     @Column
     private String ie;
 
-    // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "juridico")
-    // private List<Contato> contatos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "juridico")
+    private List<Contato> contatos = new ArrayList<>();
 
     public Juridico(String cnpf, String ie,String nome, String data_nacimento, Boolean active){
         super(nome, data_nacimento, active);

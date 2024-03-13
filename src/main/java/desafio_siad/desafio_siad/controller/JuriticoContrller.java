@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import desafio_siad.desafio_siad.model.Juridico;
+import desafio_siad.desafio_siad.repository.ContatoRepository;
 import desafio_siad.desafio_siad.repository.JuriticoResposity;
 import lombok.AllArgsConstructor;
 import java.util.List;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class JuriticoContrller {
     @Autowired
     private final JuriticoResposity juriticoResposity;
+    @Autowired
+    private final ContatoRepository contatoRepository;
+
     @GetMapping("/All")
     public @ResponseBody List<Juridico> getALL() {
        return juriticoResposity.findAll();
