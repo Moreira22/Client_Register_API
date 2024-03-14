@@ -52,6 +52,7 @@ public class Contato {
         this.descicao = data.descicao();
         this.numero = data.numero();
         this.active = true;
+        this.juridico = data.juridico();
     }
 
 }
