@@ -1,5 +1,6 @@
 package desafio_siad.desafio_siad.model;
 
+import desafio_siad.desafio_siad.domin.cliente.ClienteRequestDTO;
 import desafio_siad.desafio_siad.domin.fisico.FisicoRequestDTO;
 import desafio_siad.desafio_siad.domin.fisico.FisicoResponseDTO;
 import jakarta.persistence.Column;
@@ -34,19 +35,23 @@ public class Fisico extends Cliente {
     @Column
     private Integer numero;
 
-    //  public Fisico(FisicoRequestDTO data){
-    //   this.cpf = data.cpf();
-    //   this.uf = data.uf();
-    //   this.cidade = data.cidade();
-    //   this.bairro = data.bairro();
-    //   this.numero = data.numero();
-    // }
-    public Fisico(String cpf, String uf,String cidade, String bairro, Integer numero, String nome, String data_nacimento, Boolean active){
-      super(nome, data_nacimento, active);
-      this.cpf = cpf;
-      this.uf = uf;
-      this.cidade = cidade;
-      this.bairro = bairro;
-      this.numero = numero;
+
+    public Fisico(ClienteRequestDTO data) {
+      super(data.nome(), data.data_nacimento(), data.active(), data.empresa());
+      this.cpf = data.cpf();
+      this.uf = data.uf();
+      this.cidade = data.cidade();
+      this.bairro = data.bairro();
+      this.numero = data.numero();
     }
+    
+    public Fisico(FisicoRequestDTO data) {
+      super(data.nome(), data.data_nacimento(), data.active(), data.empresa());
+      this.cpf = data.cpf();
+      this.uf = data.uf();
+      this.cidade = data.cidade();
+      this.bairro = data.bairro();
+      this.numero = data.numero();
+    }
+    
 }
