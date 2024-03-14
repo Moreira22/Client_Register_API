@@ -51,16 +51,12 @@ public class Cliente {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Empresa empresa;
 
-    // public Cliente(ClienteRequestDTO data){
-    //     this.nome = data.nomoe();
-    //     this.data_nacimento = data.data_nacimento(); 
-    //     this.active = true;
-    // }
-
-    public Cliente(String nome, String data_nacimento, Boolean active){
+    public Cliente(String nome, String data_nacimento, Boolean active, Empresa empresa){
         this.nome = nome;
         this.data_nacimento = data_nacimento;
         this.active = true;
+        this.empresa = empresa;
     }
+
 
 }
