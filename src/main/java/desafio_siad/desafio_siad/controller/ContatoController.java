@@ -10,6 +10,7 @@ import desafio_siad.desafio_siad.model.Contato;
 import desafio_siad.desafio_siad.repository.ContatoRepository;
 import lombok.AllArgsConstructor;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -50,6 +53,19 @@ public class ContatoController {
         contatoRepository.save(newContato);
         return ResponseEntity.status(HttpStatus.CREATED).body(newContato);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Contato> updateConato(@PathVariable Long id, @RequestBody ContatoRequestDTO data) {
+        Optional<Contato> optionalContato = contatoRepository.findById(id);
+        if(optionalContato.isPresent()){
+            Contato contato = optionalContato.get();
+            contato.setDescicao(data.descicao());
+            contato.setNumero(data.numero());
+            return ResponseEntity.status(HttpStatus.OK).body(contato);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
     
 
 }
