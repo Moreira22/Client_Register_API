@@ -43,6 +43,7 @@ public class JuriticoContrller {
         var alljuritico = juriticoResposity.findAll();
        return ResponseEntity.status(HttpStatus.OK).body(alljuritico);
     }
+    
 
     @GetMapping("/{id}")
     public ResponseEntity<Juridico> getById(@PathVariable Long id){

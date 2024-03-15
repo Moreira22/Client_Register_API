@@ -3,6 +3,8 @@ package desafio_siad.desafio_siad.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import desafio_siad.desafio_siad.domin.cliente.ClienteRequestDTO;
 import desafio_siad.desafio_siad.domin.juritico.JuriticoRequestDTO;
 import jakarta.persistence.CascadeType;
@@ -30,6 +32,7 @@ public class Juridico  extends Cliente{
     private String ie;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "juridico")
+    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Contato> contatos = new ArrayList<>();
 
     public Juridico(ClienteRequestDTO data) {
