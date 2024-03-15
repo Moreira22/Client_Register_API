@@ -3,7 +3,7 @@ package desafio_siad.desafio_siad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import desafio_siad.desafio_siad.domin.cliente.ClienteRequestDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;

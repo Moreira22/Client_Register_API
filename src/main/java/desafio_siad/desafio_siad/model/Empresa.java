@@ -2,16 +2,13 @@ package desafio_siad.desafio_siad.model;
 
 import jakarta.persistence.Entity;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import desafio_siad.desafio_siad.domin.empresa.EmpresaResquestDTO;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

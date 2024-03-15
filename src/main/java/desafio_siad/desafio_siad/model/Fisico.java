@@ -2,7 +2,6 @@ package desafio_siad.desafio_siad.model;
 
 import desafio_siad.desafio_siad.domin.cliente.ClienteRequestDTO;
 import desafio_siad.desafio_siad.domin.fisico.FisicoRequestDTO;
-import desafio_siad.desafio_siad.domin.fisico.FisicoResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
