@@ -32,6 +32,14 @@ public class FisicoService {
               .map(fisicoMapper::toDTO)
               .collect(Collectors.toList());
     }
+
+    public List<FisicoResponseDTO> listActive(){
+        return fisicoRepository.findByActiveTrue()
+              .stream()
+              .map(fisicoMapper::toDTO)
+              .collect(Collectors.toList());
+    }
+
     public FisicoResponseDTO findById(@NotNull Long id){
         return fisicoRepository.findById(id).map(fisicoMapper::toDTO)
                .orElseThrow(() -> new RecordNotFoundException(id));
@@ -51,6 +59,8 @@ public class FisicoService {
             recordFound.setCidade(fisico.cidade());
             recordFound.setBairro(fisico.bairro());
             recordFound.setNumero(fisico.numero());
+            recordFound.setEmpresa(fisico.empresa());
+            fisicoRepository.save(recordFound);
             return fisicoMapper.toDTO(recordFound);
         }).orElseThrow(() -> new RecordNotFoundException(id));
     } 

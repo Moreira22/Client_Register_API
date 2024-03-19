@@ -8,7 +8,7 @@ import desafio_siad.desafio_siad.model.Fisico;
 public class FisicoMapper {
     public FisicoResponseDTO toDTO(Fisico fisico){
         return new FisicoResponseDTO(fisico.getId(), fisico.getNome(), fisico.getActive(), fisico.getData_nacimento(), fisico.getCpf(), 
-        fisico.getUf(), fisico.getCidade(), fisico.getBairro(), fisico.getNumero(), fisico.getEmpresa());
+        fisico.getUf(), fisico.getCidade(), fisico.getBairro(), fisico.getNumero());
     }
     public Fisico toEntity(FisicoRequestDTO fisicoRequestDTO){
         if(fisicoRequestDTO ==null){

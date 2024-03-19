@@ -6,6 +6,7 @@ import java.util.List;
 
 
 import desafio_siad.desafio_siad.domin.cliente.ClienteRequestDTO;
+import desafio_siad.desafio_siad.domin.contato.ContatoRequestDTO;
 import desafio_siad.desafio_siad.domin.juritico.JuriticoRequestDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -34,15 +35,11 @@ public class Juridico  extends Cliente{
     // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Contato> contatos = new ArrayList<>();
 
-    public Juridico(ClienteRequestDTO data) {
-      super(data.nome(), data.data_nacimento(), data.active(), data.empresa());
-      this.cnpf = data.cnpf();
-      this.ie = data.ie();
-    }
 
     public Juridico(JuriticoRequestDTO data){
       super(data.nome(), data.data_nacimento(), data.active(), data.empresa());
       this.cnpf = data.cnpf();
       this.ie = data.ie();
     }
+    
 }

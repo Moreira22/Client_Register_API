@@ -26,8 +26,15 @@ public class JuriticoService {
         this.juriticoMapper = juriticoMapper;
     }
 
-    public List<JuriticoResponseDTO> lsit(){
+    public List<JuriticoResponseDTO> list(){
         return juriticoResposity.findAll()
+            .stream()
+            .map(juriticoMapper::toDTO)
+            .collect(Collectors.toList());
+    }
+
+    public List<JuriticoResponseDTO> listActive(){
+        return juriticoResposity.findByActiveTrue()
             .stream()
             .map(juriticoMapper::toDTO)
             .collect(Collectors.toList());
@@ -36,6 +43,12 @@ public class JuriticoService {
     public JuriticoResponseDTO findById(@NotNull Long id){
         return juriticoResposity.findById(id).map(juriticoMapper::toDTO)
                .orElseThrow(() -> new RecordNotFoundException(id));
+    }
+
+    public List<JuriticoResponseDTO> findAllByContatos_Ativo(@NotNull boolean active){
+        return juriticoResposity.findAllByContatos_Active(active).stream()
+        .map(juriticoMapper::toDTO)
+        .collect(Collectors.toList());
     }
 
     public JuriticoResponseDTO create(@Valid @NotNull JuriticoRequestDTO juritico){
@@ -48,6 +61,8 @@ public class JuriticoService {
             recordFound.setData_nacimento(juritico.data_nacimento());
             recordFound.setCnpf(juritico.cnpf());
             recordFound.setIe(juritico.ie());  
+            recordFound.setEmpresa(juritico.empresa());
+            juriticoResposity.save(recordFound);
             return juriticoMapper.toDTO(recordFound);        
         }).orElseThrow(() -> new RecordNotFoundException(id));
     }

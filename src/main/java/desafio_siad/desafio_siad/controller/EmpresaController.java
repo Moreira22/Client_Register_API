@@ -1,10 +1,13 @@
 package desafio_siad.desafio_siad.controller;
 
 
+import desafio_siad.desafio_siad.domin.empresa.EmpresaResponseDTO;
 import desafio_siad.desafio_siad.domin.empresa.EmpresaResquestDTO;
 import desafio_siad.desafio_siad.model.Empresa;
 import desafio_siad.desafio_siad.repository.EmpresRepository;
-
+import desafio_siad.desafio_siad.service.EmpresaService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -12,66 +15,62 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.validation.annotation.Validated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
-
+@Validated
 @RestController
 @RequestMapping("/empresa")
-@AllArgsConstructor
-
 public class EmpresaController {
-    @Autowired
-    private final EmpresRepository empresRepository;
+  
+    private final EmpresaService empresService;
+
+    public EmpresaController(EmpresaService empresaService){
+      this.empresService = empresaService;
+    }
 
     @GetMapping("/All")
-    public ResponseEntity<List<Empresa>> getALL() {
-        var allempresa = empresRepository.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(allempresa);
+    public @ResponseBody List<EmpresaResponseDTO> getALL() {
+        return empresService.list();
+        
     }
 
-    @GetMapping()
-    public @ResponseBody List<Empresa> getAllActiveTrue(){
-        return empresRepository.findByActiveTrue();
+    @GetMapping("")
+    public @ResponseBody List<EmpresaResponseDTO> getALLActive() {
+        return empresService.listActive();
     }
-
+    
     @GetMapping("/{id}")
-    public ResponseEntity<Empresa> getById(@PathVariable Long id){
-        return empresRepository.findById(id)
-        .map(recordFoumd -> ResponseEntity.status(HttpStatus.OK).body(recordFoumd))
-        .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    public EmpresaResponseDTO getById(@PathVariable @NotNull Long id){
+       return empresService.findById(id);
     }
     
     @PostMapping("/register")
-    public ResponseEntity<Empresa> posRegisterEmpresa(@RequestBody EmpresaResquestDTO data){
-        Empresa newempresa = new Empresa(data);
-        empresRepository.save(newempresa);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newempresa);
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public EmpresaResponseDTO posRegisterEmpresa(@RequestBody @Valid EmpresaResquestDTO data){
+        return empresService.create(data);
     }
     @PutMapping("/{id}")
-    public  ResponseEntity<Empresa> updateEmpresa(@PathVariable Long id, @RequestBody EmpresaResquestDTO data) {
-        Optional<Empresa> optionalEmpresa = empresRepository.findById(id);
-        if(optionalEmpresa.isPresent()){
-            Empresa empresa = optionalEmpresa.get();
-            empresa.setNome(data.nome());
-            return ResponseEntity.status(HttpStatus.OK).body(empresa);
-        }
-        return ResponseEntity.noContent().build();
+    public EmpresaResponseDTO  updateEmpresa(@PathVariable Long id, @RequestBody @Valid @NotNull EmpresaResquestDTO data) {
+       return empresService.update(id, data);
         
     }
     
-    
-    
-
-
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteActive(@PathVariable @NotNull Long id){
+        empresService.sofDelete(id);
+    }
 
 }

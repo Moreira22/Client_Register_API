@@ -11,7 +11,6 @@ public record JuriticoResponseDTO(Long id,
         Boolean active,
         String data_nacimento,
         String cnpf,
-        String ie,
-        Empresa empresa) {
+        String ie) {
     
 }

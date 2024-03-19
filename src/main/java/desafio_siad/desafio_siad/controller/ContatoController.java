@@ -1,68 +1,69 @@
 package desafio_siad.desafio_siad.controller;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import desafio_siad.desafio_siad.domin.contato.ContatoRequestDTO;
-import desafio_siad.desafio_siad.model.Contato;
-import desafio_siad.desafio_siad.repository.ContatoRepository;
-import lombok.AllArgsConstructor;
-import java.util.List;
-import java.util.Optional;
+import desafio_siad.desafio_siad.domin.contato.ContatoResponseDTO;
+import desafio_siad.desafio_siad.service.ContatoService;
+import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
-
+@Validated
 @RestController
 @RequestMapping("/contato")
-@AllArgsConstructor
+
 public class ContatoController {
-    @Autowired
-    private final ContatoRepository contatoRepository;
+    private final ContatoService contatoService;
+
+    public ContatoController(ContatoService contatoService) {
+        this.contatoService = contatoService;
+    }
     
     @GetMapping("/All")
-    public ResponseEntity <List<Contato>> getALL() {
-        var allContato =  contatoRepository.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(allContato);
+    public @ResponseBody List<ContatoResponseDTO> getALL() {
+        return contatoService.list();
+    }
+
+    @GetMapping("")
+    public @ResponseBody List<ContatoResponseDTO> getALLActive() {
+        return contatoService.listActive();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Contato> getById(@PathVariable Long id){
-        return contatoRepository.findById(id)
-        .map(recordFoumd -> ResponseEntity.status(HttpStatus.OK).body(recordFoumd))
-        .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
-    }
-    
-    @GetMapping()
-    public @ResponseBody List<Contato> getAllActiveTrue(){
-        return contatoRepository.findByActiveTrue();
+    public ContatoResponseDTO getById(@PathVariable Long id){
+        return contatoService.findById(id);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Contato> postregisteConato(@RequestBody ContatoRequestDTO data) {
-        Contato newContato = new Contato(data);
-        contatoRepository.save(newContato);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newContato);
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public ContatoResponseDTO postregisteConato(@RequestBody ContatoRequestDTO data) {
+       return contatoService.create(data);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Contato> updateConato(@PathVariable Long id, @RequestBody ContatoRequestDTO data) {
-        Optional<Contato> optionalContato = contatoRepository.findById(id);
-        if(optionalContato.isPresent()){
-            Contato contato = optionalContato.get();
-            contato.setDescicao(data.descicao());
-            contato.setNumero(data.numero());
-            return ResponseEntity.status(HttpStatus.OK).body(contato);
-        }
-        return ResponseEntity.noContent().build();
+    public ContatoResponseDTO updateConato(@PathVariable Long id, @RequestBody @NotNull ContatoRequestDTO data) {
+        return contatoService.update(id, data);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteActive(@PathVariable @NotNull Long id){
+        contatoService.sofDelete(id);
     }
 
     

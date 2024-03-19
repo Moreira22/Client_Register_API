@@ -30,11 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ClienteController {
     @Autowired
     private final ClienteRepository clienteRepository;
-    @Autowired
-    private final FisicoRepository fisicoRepository;
-    @Autowired
-    private final JuriticoResposity juriticoResposity;
-
+   
     @GetMapping("/All")
     public ResponseEntity<List<Cliente>> getMethodName(){
        var allClinete = clienteRepository.findAll();
@@ -52,19 +48,5 @@ public class ClienteController {
         .map(recordFoumd -> ResponseEntity.status(HttpStatus.OK).body(recordFoumd))
         .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
-
-    @PostMapping("/register")
-    public ResponseEntity<Cliente> postRegisterCliente(@RequestBody ClienteRequestDTO data) {
-        if(data.cnpf() == null){
-            Fisico newFisico = new Fisico(data);
-            fisicoRepository.save(newFisico);
-            return ResponseEntity.status(HttpStatus.CREATED).body(newFisico);
-        }else{
-            Juridico newJuridico = new Juridico(data);
-            juriticoResposity.save(newJuridico);
-            return ResponseEntity.status(HttpStatus.CREATED).body(newJuridico);
-        }
-    }
-    
     
 }

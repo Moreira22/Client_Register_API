@@ -7,7 +7,7 @@ import desafio_siad.desafio_siad.model.Contato;
 @Component
 public class ContatoMapper {
     public ContatoResponseDTO toDTO(Contato contato){
-        return new ContatoResponseDTO(contato.getId(), contato.getDescicao(),contato.getNumero(),contato.getActive(),contato.getJuridico());
+        return new ContatoResponseDTO(contato.getId(), contato.getDescicao(),contato.getNumero(),contato.getActive());
     }
     public Contato toEntity(ContatoRequestDTO requestDTO){
         if(requestDTO == null){
@@ -19,6 +19,7 @@ public class ContatoMapper {
         }
         contato.setDescicao(requestDTO.descicao());
         contato.setNumero(requestDTO.numero());
+        contato.setActive(requestDTO.active());
         contato.setJuridico(requestDTO.juridico());
 
         return contato;

@@ -32,6 +32,12 @@ public class EmpresaService {
             .map(empresaMapper::toDTO)
             .collect(Collectors.toList());
     }
+    public List<EmpresaResponseDTO> listActive(){
+        return empresRepository.findByActiveTrue()
+             .stream()
+             .map(empresaMapper::toDTO)
+             .collect(Collectors.toList());
+    }
 
     public EmpresaResponseDTO findById(@NotNull Long id){
         return empresRepository.findById(id).map(empresaMapper::toDTO)
@@ -45,6 +51,7 @@ public class EmpresaService {
     public EmpresaResponseDTO update(@NotNull Long id, @Valid @NotNull EmpresaResquestDTO empresa){
         return empresRepository.findById(id).map(recordFound ->{
             recordFound.setNome(empresa.nome());
+            empresRepository.save(recordFound);
             return empresaMapper.toDTO(recordFound);
         })
         .orElseThrow(() -> new RecordNotFoundException(id));

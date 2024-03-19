@@ -11,7 +11,7 @@ public record FisicoResponseDTO(Long id,
     String uf,
     String cidade,
     String bairro,
-    Integer numero,
-    Empresa empresa) {
+    Integer numero
+    ) {
     
 }

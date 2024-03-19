@@ -1,5 +1,7 @@
 package desafio_siad.desafio_siad.domin.juritico;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 
@@ -9,7 +11,7 @@ import desafio_siad.desafio_siad.model.Juridico;
 public class JuriticoMapper {
     public JuriticoResponseDTO toDTO( Juridico juridico){
         return new JuriticoResponseDTO(juridico.getId(), juridico.getNome(), juridico.getActive(), juridico.getData_nacimento(), 
-        juridico.getCnpf(), juridico.getIe(), juridico.getEmpresa());
+        juridico.getCnpf(), juridico.getIe());
     }
     public Juridico toEntity(JuriticoRequestDTO requestDTO){
         if(requestDTO == null){

@@ -27,7 +27,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Where(clause = "active = true")
 public class Contato {
 
     @Id

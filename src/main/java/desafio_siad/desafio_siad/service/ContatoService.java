@@ -26,8 +26,22 @@ public class ContatoService {
         this.contatoMapper = contatoMappe;
     }
 
-    public List<ContatoResponseDTO> lsit(){
+    public List<ContatoResponseDTO> list(){
         return contatoRepository.findAll()
+              .stream()
+              .map(contatoMapper::toDTO)
+              .collect(Collectors.toList());
+    }
+
+    public List<ContatoResponseDTO> listJuritoco(){
+        return contatoRepository.findAll()
+              .stream()
+              .map(contatoMapper::toDTO)
+              .collect(Collectors.toList());
+    }
+    
+    public List<ContatoResponseDTO> listActive(){
+        return contatoRepository.findByActiveTrue()
               .stream()
               .map(contatoMapper::toDTO)
               .collect(Collectors.toList());
@@ -46,9 +60,10 @@ public class ContatoService {
         return contatoRepository.findById(id).map(recordFound -> {
             recordFound.setDescicao(contato.descicao());
             recordFound.setNumero(contato.numero());
+            recordFound.setJuridico(contato.juridico());
+            contatoRepository.save(recordFound);
             return contatoMapper.toDTO(recordFound);
-        })
-        .orElseThrow(() -> new RecordNotFoundException(id));
+        }).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
     public void delete(@NotNull Long id){
