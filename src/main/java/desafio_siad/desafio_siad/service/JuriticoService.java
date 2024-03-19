@@ -10,6 +10,7 @@ import desafio_siad.desafio_siad.domin.juritico.JuriticoMapper;
 import desafio_siad.desafio_siad.domin.juritico.JuriticoRequestDTO;
 import desafio_siad.desafio_siad.domin.juritico.JuriticoResponseDTO;
 import desafio_siad.desafio_siad.exception.RecordNotFoundException;
+import desafio_siad.desafio_siad.repository.ContatoRepository;
 import desafio_siad.desafio_siad.repository.JuriticoResposity;
 import jakarta.validation.Valid;
 import jakarta.transaction.Transactional;
@@ -19,11 +20,13 @@ import jakarta.validation.constraints.NotNull;
 @Service
 public class JuriticoService {
     private final JuriticoResposity juriticoResposity;
+    private final ContatoRepository contatoRespRepository;
     private final JuriticoMapper juriticoMapper;
 
-    public JuriticoService( JuriticoResposity juriticoResposity,JuriticoMapper juriticoMapper ){
+    public JuriticoService( JuriticoResposity juriticoResposity, JuriticoMapper juriticoMapper, ContatoRepository contatoRespRepository ){
         this.juriticoResposity = juriticoResposity;
         this.juriticoMapper = juriticoMapper;
+        this.contatoRespRepository = contatoRespRepository; 
     }
 
     public List<JuriticoResponseDTO> list(){
@@ -68,7 +71,8 @@ public class JuriticoService {
     }
 
     public void delete(@NotNull Long id){
-        juriticoResposity.delete(juriticoResposity.findById(id).orElseThrow(() -> new RecordNotFoundException(id)));
+        juriticoResposity.delete(juriticoResposity.findById(id)
+        .orElseThrow(() -> new RecordNotFoundException(id)));
     }
 
     @Transactional
@@ -77,5 +81,10 @@ public class JuriticoService {
             recordFound.setActive(false);
             return recordFound;
         }).orElseThrow(() -> new RecordNotFoundException(id));
+        contatoRespRepository.findAllByJuridico_id(id).stream()
+        .map(recordFound ->{
+            recordFound.setActive(false);
+            return recordFound;
+        }).forEach(contato -> contatoRespRepository.save(contato));
     }
 }

@@ -9,12 +9,8 @@ import desafio_siad.desafio_siad.domin.juritico.JuriticoResponseDTO;
 import desafio_siad.desafio_siad.service.JuriticoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 
 import java.util.List;
-
-
-
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
