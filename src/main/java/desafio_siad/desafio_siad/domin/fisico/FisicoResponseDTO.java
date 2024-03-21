@@ -1,6 +1,5 @@
 package desafio_siad.desafio_siad.domin.fisico;
 
-import desafio_siad.desafio_siad.model.Empresa;
 
 
 public record FisicoResponseDTO(Long id,

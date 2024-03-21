@@ -5,8 +5,7 @@ import java.util.List;
 
 
 
-import desafio_siad.desafio_siad.domin.cliente.ClienteRequestDTO;
-import desafio_siad.desafio_siad.domin.contato.ContatoRequestDTO;
+
 import desafio_siad.desafio_siad.domin.juritico.JuriticoRequestDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

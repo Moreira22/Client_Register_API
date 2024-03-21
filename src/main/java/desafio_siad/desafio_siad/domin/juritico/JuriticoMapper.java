@@ -1,7 +1,5 @@
 package desafio_siad.desafio_siad.domin.juritico;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 
